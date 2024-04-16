@@ -1,0 +1,63 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Product Detail{% endblock title %}
+{% block main-content %}
+
+
+
+
+
+<div class="container">
+    <div class="row">
+
+
+       
+
+        <div class="col">
+            <a href="{% url 'profile' %}"><button type="button" class="btn btn-danger m-5">Back To Profile</button></a> 
+        </div>
+ 
+    
+
+    </div>
+</div>
+
+
+<div class="container my-5">
+    {% for op in op %}
+
+    <div class="row">
+        <div class="col">
+            <img src="{{op.product.product_image.url}}" alt="" class="img-fluid" height="100" width="100">
+        </div>
+        <div class="col">
+            <p class="fw-bold">{{op.product.title}}</p>
+        </div>
+        
+        <div class="col">
+            <p class="fw-bold">Rs.<span class="text-danger fw-bold">{{op.product.discount_price}}</span></p>
+        </div>
+
+        <div class="col">
+            <p class="fw-bold">{{op.status}}</p>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'update-orders' op.id %}"> <button type="button" class="btn btn-sm btn-warning">Update</button></a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'delete-orders' op.id %}"> <button type="button" class="btn btn-sm btn-danger">Delete</button></a>
+        </div>
+
+
+        
+    </div>
+    <hr>
+    {% endfor %}
+    
+
+</div>
+
+
+{% endblock main-content %}

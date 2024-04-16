@@ -1,0 +1,64 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Product Detail{% endblock title %}
+{% block main-content %}
+
+
+
+
+
+<div class="container">
+    <div class="row">
+
+
+        <div class="col">
+            <a href="{% url 'add-products' %}"><button type="button" class="btn btn-primary m-5">Add Product</button></a>
+        </div>
+       
+
+        <div class="col">
+            <a href="{% url 'profile' %}"><button type="button" class="btn btn-danger m-5">Back To Profile</button></a> 
+        </div>
+ 
+    
+
+    </div>
+</div>
+
+
+<div class="container my-5">
+    {% for p in products %}
+
+    <div class="row">
+        <div class="col">
+            <img src="{{p.product_image.url}}" alt="" class="img-fluid" height="100" width="100">
+        </div>
+        <div class="col">
+            <p class="fw-bold">{{p.title}}</p>
+        </div>
+        <div class="col">
+            <p class="fw-bold">{{p.brand}}</p>
+        </div>
+        <div class="col">
+            <p class="fw-bold">Rs.<span class="text-danger fw-bold">{{p.discount_price}}</span></p>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'update-products' p.id %}"> <button type="button" class="btn btn-sm btn-warning">Update</button></a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'delete-products' p.id %}"> <button type="button" class="btn btn-sm btn-danger">Delete</button></a>
+        </div>
+
+
+        
+    </div>
+    <hr>
+    {% endfor %}
+    
+
+</div>
+
+
+{% endblock main-content %}

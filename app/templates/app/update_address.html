@@ -1,0 +1,57 @@
+{% extends 'app/base.html' %} 
+{% load static %}
+{% block title %} Address {% endblock title %}  
+{% block main-content %}
+
+
+
+<h2 class="text-center fw-bold text-capitalize mx-3">Product Add here</h2>
+
+
+<form action="" method="post" enctype='multipart/form-data'>
+
+    {% csrf_token %}
+
+
+
+    {% if messages %} 
+    {% for message in messages %}
+    <div {% if message.tags %}class="alert alert-{{message.tags}} mb-5"  {% endif %}> 
+
+     {{message}}
+
+     {% endfor %}
+   </div>
+   {% endif %}
+    
+
+    {% for fm in form %}
+    <div class="form-group mb-3 m-5">
+     
+     {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors | striptags }}</small>
+    </div>
+
+   
+
+    {% endfor %}
+    
+     <div class="text-center">
+        <button type="submit" class="btn btn-warning mx-5">Update</button>
+     </div>
+    
+
+    
+    </div>
+   
+
+    {% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+    <p class="alert alert-danger my-3">{{error}}</p>
+    {% endfor %}
+    {% endif %} 
+
+</form>
+
+
+
+{% endblock main-content %}

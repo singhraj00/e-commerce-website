@@ -1,0 +1,54 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Laptops{% endblock title %}
+{% block main-content %}
+
+
+<style>
+    table,th,td{
+        border:1px solid black;
+        border-collapse: separate;
+    }
+</style>
+
+<table class="table table-responsive ">
+    <tr>
+        <th>
+            Username
+        </th>
+        <th>
+            Email
+        </th>
+      
+        <th>
+            Is_SuperUser
+        </th>
+        <th>
+            Action
+        </th>
+    </tr> 
+
+
+    <tr>
+        {% for u in users %}
+        <td>
+          {{u.username}}
+        </td>
+        <td>{{u.email}}</td>
+       
+        <td>{{u.is_superuser}}</td>
+        <td>
+            <a href="{% url 'update-user' u.id %}"><button type="button"  class="btn  btn-warning">Update</button></a>
+            <a href="{% url 'delete-user' u.id %}"><button type="button"  class="btn  btn-danger">Delete</button></a>
+        </td>
+    </tr>
+   
+    {% endfor %}
+</table> 
+
+<br> 
+<a href="{% url 'add-users' %}"><button type="button"  class="btn btn-sm btn-primary">Add User</button></a>
+<a href="{% url 'profile' %}"><button type="button" class="btn btn-danger m-5">Back To Profile</button></a> 
+
+
+{% endblock main-content %}

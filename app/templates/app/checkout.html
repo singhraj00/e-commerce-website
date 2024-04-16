@@ -1,0 +1,165 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Check Out{% endblock title %}
+{% block main-content %}
+
+<div class="container">
+ <div class="row mt-5">
+  <div class="col-sm-6">
+    <h4>Order Summary</h4>
+    <hr>
+    {% for item in cart_item %}
+
+      <div class="card mb-2">
+        <div class="card-body">
+          <h5>Product: {{item.product.title}}</h5>
+          <p>Quantity: {{item.quantity}}</p>
+          <p class="fw-bold">Price: {{item.total_cost}}</p>
+        </div>
+        
+      </div>
+      {% endfor %}
+
+      
+
+      <p class="fw-bold text-center text-danger">Total Cost + Rs.70 = Rs.{{totalamount}}</p>
+      <hr>
+    <small>Term and Condition: Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, ullam saepe! Iure optio repellat dolor velit, minus rem. Facilis cumque neque numquam laboriosam, accusantium adipisci nisi nihil in et quis?</small>
+  </div>
+  <div class="col-sm-4 offset-sm-1">
+    <h4>Select Shipping Address</h4>
+    <hr>
+    <form action="/paymentdone" id="myform">
+      {% for ad in add %}
+
+     <div class="card">
+        <div class="card-body">
+        <h5>Hi, {{ad.name}}</h5>
+        <p>{{ad.locality}}, {{ad.city}}, {{ad.state}} - {{ad.zipcode}}</p>
+        </div>
+      </div>
+        <div class="form-check mt-2 mb-5">
+          <input class="form-check-input" type="radio" value="{{ad.id}}" name="custid" id="custadd{{forloop.counter}}">
+          <label class="form-check-label fw-bold" for="">
+            Address: {{forloop.counter}}</label>
+        </div>
+         {% endfor %}
+        <div class="text-end">
+
+          <!-- Razorpay Payment Button -->
+          <!-- <button id="rzp-button1">Pay with Razorpay</button> -->
+
+
+          <div id="paypal-button-container"></div>
+
+          <button type="submit" class="btn btn-warning mt-3 px-5 fw-bold">Cash On Delievery</button>
+  
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+{% endblock main-content %}
+
+
+{% block payment-gateway %}
+
+
+
+<!-- Razor-Pay Payment Integration -->
+
+
+<!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+<script>
+var options = {
+    "key": "{{razorpay_merchant_id}}", // Enter the Key ID generated from the Dashboard
+    "amount": "100", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Shopify",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": "{{razorpay_order_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature)
+    },
+   
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+});
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+</script> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://www.paypal.com/sdk/js?client-id=ASObsR-MvIAjkm21YFEb2Q5wZv8xztwZuOILfJwV_Vf37WyApi0S6CwS-xwZD_dcQ1sESnKTeDFU1BGG&currency=USD"></script>
+
+<script>
+  // Render the PayPal button into #paypal-button-container
+  paypal.Buttons({
+
+      // Set up the transaction
+      createOrder: function(data, actions) {
+          return actions.order.create({
+              purchase_units: [{
+                  amount: {
+                      value: '{{totalamount}}'
+                  }
+              }]
+          });
+      },
+
+      // Finalize the transaction
+      onApprove: function(data, actions) {
+          return actions.order.capture().then(function(orderData) {
+              // Successful capture! For demo purposes:
+              console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+              var transaction = orderData.purchase_units[0].payments.captures[0];
+              alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+              document.getElementById("myform").submit();
+
+            
+          });
+      }
+
+
+  }).render('#paypal-button-container');
+</script>
+
+{% endblock payment-gateway %}

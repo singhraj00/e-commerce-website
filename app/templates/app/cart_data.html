@@ -1,0 +1,56 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Product Detail{% endblock title %}
+{% block main-content %}
+
+
+
+
+
+<div class="container">
+    <div class="row">
+
+
+   
+
+        <div class="col">
+            <a href="{% url 'profile' %}"><button type="button" class="btn btn-danger m-5">Back To Profile</button></a> 
+        </div>
+ 
+    
+
+    </div>
+</div>
+
+
+<div class="container my-5">
+    {% for c in carts %}
+
+    <div class="row">
+        <div class="col">
+            <img src="{{c.product.product_image.url}}" alt="" class="img-fluid" height="100" width="100">
+            <p>User: {{c.user.username}}</p>
+        </div>
+        <div class="col">
+            <p class="fw-bold">{{c.product.title}}</p>
+        </div>
+        <div class="col">
+            <p class="fw-bold">{{c.quantity}}</p>
+        </div>
+        <div class="col">
+            <p class="fw-bold">Rs.<span class="text-danger fw-bold">{{c.product.discount_price}}</span></p>
+        </div>
+
+    
+
+
+        
+    </div>
+    <hr>
+    {% endfor %}
+    
+
+</div>
+
+
+{% endblock main-content %}

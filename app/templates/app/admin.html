@@ -1,0 +1,30 @@
+{% extends 'app/base.html' %} 
+{% load static %}
+{% block title %} Address {% endblock title %}  
+{% block main-content %}
+
+<h2 class="text-center fw-bold text-danger shadow p-2 m-5 bg-dark"> ADMIN DASHBOARD </h2>
+ 
+<a href="{% url 'view-products' %}"><button type="button" class="btn btn-primary m-5">Products</button></a>
+
+
+<a href="{% url 'users' %}"><button type="button" class="btn btn-info m-5">Users</button></a>
+
+
+
+<a href="{% url 'carts-data' %}"><button type="button" class="btn btn-warning m-5">Cart</button></a>
+
+
+
+<a href="{% url 'orders-data' %}"><button type="button" class="btn btn-success m-5">Orders</button></a>
+
+
+
+
+
+
+
+
+
+
+{% endblock main-content %}
